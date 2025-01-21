@@ -62,7 +62,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
   const handleDeleteFile = async () => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/file?path=${encodeURIComponent(fileName)}`,
+        `/api/file?path=${encodeURIComponent(fileName)}`,
         {
           method: "DELETE",
           headers: {
@@ -84,7 +84,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
   const handleDeleteDirectory = async () => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/directory?path=${encodeURIComponent(fileName)}`,
+        `/api/directory?path=${encodeURIComponent(fileName)}`,
         {
           method: "DELETE",
           headers: {
@@ -126,7 +126,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
     const newName = prompt("Enter new file name:", fileName);
     if (newName) {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/file`, {
+        const response = await fetch(`/api/file`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
