@@ -36,6 +36,7 @@ const Home: FC = () => {
         },
       })
       .then((response) => {
+        console.log(response.data);
         const directories = response.data.directories;
         const requestedPath = ".";
         if (directories && Array.isArray(directories[requestedPath])) {
@@ -47,7 +48,7 @@ const Home: FC = () => {
         setLoading(false);
       })
       .catch((err) => {
-        setError("Failed to fetch directories.");
+        setError("Failed to fetch directory data.");
         setLoading(false);
       });
   }, []); 
