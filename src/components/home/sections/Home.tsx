@@ -30,12 +30,13 @@ const Home: FC = () => {
   const fetchData = useCallback(() => {
     setLoading(true);
     axios
-      .get("http://127.0.0.1:8000/api/directory", {
+      .get("/api/directory", {
         params: {
           path: ".",
         },
       })
       .then((response) => {
+        console.log(response.data);
         const directories = response.data.directories;
         const requestedPath = ".";
         if (directories && Array.isArray(directories[requestedPath])) {
@@ -47,7 +48,7 @@ const Home: FC = () => {
         setLoading(false);
       })
       .catch((err) => {
-        setError("Failed to fetch files.");
+        setError("Failed to fetch directory data.");
         setLoading(false);
       });
   }, []); 
