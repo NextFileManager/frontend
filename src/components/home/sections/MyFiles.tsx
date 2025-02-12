@@ -1,6 +1,4 @@
-import React, { FC } from "react";
-
-const MyFilesSection: FC = () => {
+const MyFilesSection: React.FC = () => {
   return (
     <div>
       <div className="px-6">

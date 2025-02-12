@@ -1,6 +1,4 @@
-import React, { FC } from "react";
-
-const Trash: FC = () => {
+const Trash: React.FC = () => {
   return (
     <div>
       <div className="px-6">

@@ -1,6 +1,4 @@
-import React, { FC } from "react";
-
-const SharedSection: FC = () => {
+const SharedSection: React.FC = () => {
   return (
     <div>
       <div className="px-6">
