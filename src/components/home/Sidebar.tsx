@@ -4,10 +4,10 @@ import UploadMenu from "./UploadMenu";
 
 const icons: Icon[] = [
   { icon: "home", path: "" },
-  { icon: "folder", path: "myfiles" },
-  { icon: "group", path: "shared" },
-  { icon: "star", path: "starred" },
-  { icon: "delete", path: "trash" },
+  { icon: "folder", path: "/myfiles" },
+  { icon: "group", path: "/shared" },
+  { icon: "star", path: "/starred" },
+  { icon: "delete", path: "/trash" },
 ];
 interface Icon {
   icon: string;
@@ -17,7 +17,7 @@ interface Icon {
 const Sidebar: React.FC = () => {
   const [isUploadMenuOpen, setIsUploadMenuOpen] = useState(false); 
   const location = useLocation(); 
-  const isActive = (path: string): boolean => location.pathname === `/dashboard/${path}`;
+  const isActive = (path: string): boolean => location.pathname === `/dashboard${path}`;
 
   const toggleUploadMenu = () => {
     setIsUploadMenuOpen(!isUploadMenuOpen);
@@ -42,7 +42,7 @@ const Sidebar: React.FC = () => {
         {icons.map((icon) => (
           <Link
             key={icon.path}
-            to={`/dashboard/${icon.path}`}
+            to={`/dashboard${icon.path}`}
             className={`material-icons cursor-pointer ${
               isActive(icon.path) ? "text-blue-500" : "text-gray-600 dark:text-gray-400"
             }`}

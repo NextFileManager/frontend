@@ -1,4 +1,3 @@
-import { FC, useState } from "react";
 import BreadCrumb from "../components/home/BreadCrumb";
 import Header from "../components/home/Header";
 import Sidebar from "../components/home/Sidebar";
@@ -9,7 +8,7 @@ import Trash from "../components/home/sections/Trash";
 import MyFiles from "../components/home/sections/MyFiles";
 import { Route, Routes } from "react-router-dom";
 
-const HomePage: FC = () => {
+const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 h-full dark:bg-gray-900 flex flex-col pb-10">
       <Header />
