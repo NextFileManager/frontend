@@ -81,7 +81,7 @@ const UploadMenu: React.FC<UploadMenuProps> = ({ isOpen, toggleMenu }) => {
       <div
         ref={menuRef}
         id="dropdownDots"
-        className={`absolute right-0 mt-2 z-50 w-36 bg-white dark:bg-gray-900 shadow-lg rounded-md border border-gray-200 dark:border-gray-700 ${
+        className={`absolute -right-8 mt-2 z-50 w-44 bg-white dark:bg-gray-900 shadow-lg rounded-md border border-gray-200 dark:border-gray-700 ${
           !isOpen ? "hidden" : ""
         }`}
       >
