@@ -1,7 +1,7 @@
 import BreadCrumb from "../components/home/BreadCrumb";
 import Header from "../components/home/Header";
 import Sidebar from "../components/home/Sidebar";
-import Home from "../components/home/sections/Home"; 
+import Dashboard from "../components/home/sections/Dashboard";
 import Starred from "../components/home/sections/Starred";
 import Shared from "../components/home/sections/Shared";
 import Trash from "../components/home/sections/Trash";
@@ -20,7 +20,7 @@ const HomePage: React.FC = () => {
             <BreadCrumb />
           </div>
           <Routes>
-            <Route index element={<Home />} />
+            <Route index element={<Dashboard />} />
             <Route path="myfiles" element={<MyFiles />} />
             <Route path="shared" element={<Shared />} />
             <Route path="starred" element={<Starred />} />
