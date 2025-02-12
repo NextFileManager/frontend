@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import { FileUp, FolderUp, FolderPlus } from "lucide-react";
+import useClickOutside from "../common/hooks/useClickOutside";
 
 interface UploadMenuProps {
   isOpen: boolean;
@@ -10,39 +11,37 @@ const UploadMenu: React.FC<UploadMenuProps> = ({ isOpen, toggleMenu }) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        menuRef.current &&
-        !menuRef.current.contains(event.target as Node) &&
-        buttonRef.current &&
-        !buttonRef.current.contains(event.target as Node)
-      ) {
-        toggleMenu();
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen, toggleMenu]);
+  useClickOutside([menuRef, buttonRef], () => toggleMenu(), isOpen);
 
   const handleNewFolder = () => {
     console.log("New Folder option selected");
   };
 
   const handleFileUpload = () => {
-    console.log("File Upload option selected");
+    const input = document.createElement("input");
+    input.type = "file";
+    input.multiple = true; // Allow multiple file selection
+    input.onchange = (event) => {
+      const files = (event.target as HTMLInputElement).files;
+      if (files) {
+        console.log("Files selected:", files);
+      }
+    };
+    input.click();
   };
 
   const handleFolderUpload = () => {
-    console.log("Folder Upload option selected");
+    const input = document.createElement("input");
+    input.type = "file";
+    input.webkitdirectory = true; // Allow folder selection
+    input.multiple = false;
+    input.onchange = (event) => {
+      const files = (event.target as HTMLInputElement).files;
+      if (files) {
+        console.log("Files selected:", files);
+      }
+    };
+    input.click();
   };
 
   return (
@@ -75,8 +74,7 @@ const UploadMenu: React.FC<UploadMenuProps> = ({ isOpen, toggleMenu }) => {
               onClick={handleNewFolder}
               className="flex items-center w-full text-left px-4 py-2 text-xs text-gray-700 dark:text-gray-200 hover:bg-blue-500 hover:text-white transition duration-200 ease-in-out border-b border-gray-200 dark:border-gray-700"
             >
-              
-              <FolderPlus size={14} className="mr-2"/>
+              <FolderPlus size={14} className="mr-2" />
               New Folder
             </button>
           </li>
@@ -85,7 +83,7 @@ const UploadMenu: React.FC<UploadMenuProps> = ({ isOpen, toggleMenu }) => {
               onClick={handleFileUpload}
               className="flex items-center w-full text-left px-4 py-2 text-xs text-gray-700 dark:text-gray-200 hover:bg-blue-500 hover:text-white transition duration-200 ease-in-out border-b border-gray-200 dark:border-gray-700"
             >
-             <FileUp size={14} className="mr-2"/>
+              <FileUp size={14} className="mr-2" />
               File Upload
             </button>
           </li>
@@ -94,7 +92,7 @@ const UploadMenu: React.FC<UploadMenuProps> = ({ isOpen, toggleMenu }) => {
               onClick={handleFolderUpload}
               className="flex items-center w-full text-left px-4 py-2 text-xs text-gray-700 dark:text-gray-200 hover:bg-blue-500 hover:text-white transition duration-200 ease-in-out"
             >
-              <FolderUp size={14} className="mr-2"/>
+              <FolderUp size={14} className="mr-2" />
               Folder Upload
             </button>
           </li>
