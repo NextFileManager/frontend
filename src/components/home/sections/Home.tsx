@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useCallback} from "react";
+import React, { FC, useState, useEffect, useCallback } from "react";
 import LoadingIndicator from "../LoadingIndicator";
 import ErrorDisplay from "../ErrorDisplay";
 import SuggestedFilesGrid from "../SuggestedFilesGrid";
@@ -19,7 +19,6 @@ interface File {
 interface APIResponse {
   files: File[];
 }
-
 
 const Home: FC = () => {
   const [files, setFiles] = useState<File[]>([]);
@@ -51,7 +50,7 @@ const Home: FC = () => {
         setError("Failed to fetch directory data.");
         setLoading(false);
       });
-  }, []); 
+  }, []);
 
   useEffect(() => {
     fetchData();
@@ -72,7 +71,7 @@ const Home: FC = () => {
   return (
     <div>
       <section className="px-6">
-        <h2 className="text-xl font-bold mt-6 mb-4 dark:text-white">For you</h2>
+        <h2 className="text-xl font-bold mt-1 mb-4 dark:text-white">For you</h2>
         <SuggestedFilesGrid files={files} refreshData={fetchData} />
       </section>
       <section className="px-6">
@@ -82,7 +81,11 @@ const Home: FC = () => {
             <ButtonGroup activeView={view} onChangeView={setView} />
           </div>
         </div>
-        {view === 1 ? <RecentFilesGrid files={files} refreshData={fetchData} /> : <RecentFilesTable files={files} refreshData={fetchData} />}
+        {view === 1 ? (
+          <RecentFilesGrid files={files} refreshData={fetchData} />
+        ) : (
+          <RecentFilesTable files={files} refreshData={fetchData} />
+        )}
       </section>
     </div>
   );
