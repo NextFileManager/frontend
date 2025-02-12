@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import { FileUp, FolderUp, FolderPlus } from "lucide-react";
 
 interface UploadMenuProps {
   isOpen: boolean;
@@ -72,27 +73,28 @@ const UploadMenu: React.FC<UploadMenuProps> = ({ isOpen, toggleMenu }) => {
           <li>
             <button
               onClick={handleNewFolder}
-              className="flex items-center w-full text-left px-4 py-2 text-xs text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white border-b border-gray-200 dark:border-gray-700"
+              className="flex items-center w-full text-left px-4 py-2 text-xs text-gray-700 dark:text-gray-200 hover:bg-blue-500 hover:text-white transition duration-200 ease-in-out border-b border-gray-200 dark:border-gray-700"
             >
-              <i className="material-icons text-sm mr-2">create_new_folder</i>
+              
+              <FolderPlus size={14} className="mr-2"/>
               New Folder
             </button>
           </li>
           <li>
             <button
               onClick={handleFileUpload}
-              className="flex items-center w-full text-left px-4 py-2 text-xs text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white border-b border-gray-200 dark:border-gray-700"
+              className="flex items-center w-full text-left px-4 py-2 text-xs text-gray-700 dark:text-gray-200 hover:bg-blue-500 hover:text-white transition duration-200 ease-in-out border-b border-gray-200 dark:border-gray-700"
             >
-              <i className="material-icons text-sm mr-2">upload_file</i>
+             <FileUp size={14} className="mr-2"/>
               File Upload
             </button>
           </li>
           <li>
             <button
               onClick={handleFolderUpload}
-              className="flex items-center w-full text-left px-4 py-2 text-xs text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+              className="flex items-center w-full text-left px-4 py-2 text-xs text-gray-700 dark:text-gray-200 hover:bg-blue-500 hover:text-white transition duration-200 ease-in-out"
             >
-              <i className="material-icons text-sm mr-2">drive_folder_upload</i>
+              <FolderUp size={14} className="mr-2"/>
               Folder Upload
             </button>
           </li>

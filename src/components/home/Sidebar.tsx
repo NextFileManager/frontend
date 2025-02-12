@@ -1,28 +1,23 @@
-import { FC, useState } from "react";
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import UploadMenu from "./UploadMenu"; 
 
+const icons: Icon[] = [
+  { icon: "home", path: "" },
+  { icon: "folder", path: "myfiles" },
+  { icon: "group", path: "shared" },
+  { icon: "star", path: "starred" },
+  { icon: "delete", path: "trash" },
+];
 interface Icon {
   icon: string;
-  id: string;
+  path: string;
 }
 
-interface SidebarProps {
-  openSection: string;  
-  setOpenSection: (section: string) => void;  
-}
-
-const Sidebar: FC<SidebarProps> = ({ openSection, setOpenSection }) => {
+const Sidebar: React.FC = () => {
   const [isUploadMenuOpen, setIsUploadMenuOpen] = useState(false); 
-
-  const icons: Icon[] = [
-    { icon: "home", id: "home" },
-    { icon: "folder", id: "myfiles" },
-    { icon: "group", id: "shared" },
-    { icon: "star", id: "starred" },
-    { icon: "delete", id: "trash" },
-  ];
-
-  const isActive = (id: string): boolean => id === openSection;
+  const location = useLocation(); 
+  const isActive = (path: string): boolean => location.pathname === `/dashboard/${path}`;
 
   const toggleUploadMenu = () => {
     setIsUploadMenuOpen(!isUploadMenuOpen);
@@ -44,18 +39,16 @@ const Sidebar: FC<SidebarProps> = ({ openSection, setOpenSection }) => {
       )}
 
       <div className="flex flex-col space-y-4 items-center">
-        {icons.map((icon: Icon) => (
-          <i
-            key={icon.id}
-            onClick={() => setOpenSection(icon.id)} 
+        {icons.map((icon) => (
+          <Link
+            key={icon.path}
+            to={`/dashboard/${icon.path}`}
             className={`material-icons cursor-pointer ${
-              isActive(icon.id)
-                ? "text-blue-500"
-                : "text-gray-600 dark:text-gray-400"
+              isActive(icon.path) ? "text-blue-500" : "text-gray-600 dark:text-gray-400"
             }`}
           >
             {icon.icon}
-          </i>
+          </Link>
         ))}
 
         <div className="border-t border-gray-300 w-8 dark:border-gray-700"></div>
