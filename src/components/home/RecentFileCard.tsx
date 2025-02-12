@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import ContextMenu from "./ContextMenu";
 
 interface RecentFileCardProps {
@@ -19,7 +18,7 @@ const RecentFileCard: React.FC<RecentFileCardProps> = ({
   file,
   isOpen,
   toggleMenu,
-  refreshData
+  refreshData,
 }) => {
   const formatDate = (epoch: string) => {
     const date = new Date(parseInt(epoch) * 1000);

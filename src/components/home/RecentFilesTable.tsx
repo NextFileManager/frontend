@@ -1,19 +1,23 @@
 import React, { useState } from "react";
 import ContextMenu from "./ContextMenu";
+import { Folder, File } from "lucide-react";
 
 interface RecentFilesTableProps {
   files: {
     fileName: string;
     created: string;
     modified: string;
-    size: number; 
+    size: number;
     imagepath: string;
     mime_type: string;
   }[];
-  refreshData: () => void
+  refreshData: () => void;
 }
 
-const RecentFilesTable: React.FC<RecentFilesTableProps> = ({ files, refreshData }) => {
+const RecentFilesTable: React.FC<RecentFilesTableProps> = ({
+  files,
+  refreshData,
+}) => {
   const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
 
   const formatDate = (epoch: string) => {
@@ -35,7 +39,6 @@ const RecentFilesTable: React.FC<RecentFilesTableProps> = ({ files, refreshData 
     const fileSize = size / Math.pow(k, i);
     return `${fileSize % 1 === 0 ? fileSize : fileSize.toFixed(2)} ${sizes[i]}`;
   };
-  
 
   const removeFileExtension = (filename: string) => {
     if (!filename) return "";
@@ -64,11 +67,17 @@ const RecentFilesTable: React.FC<RecentFilesTableProps> = ({ files, refreshData 
           {files.map((file, index) => (
             <tr
               key={index}
-              className="border-b border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700" 
+              className="border-b border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700"
             >
-              <td className="p-3 dark:text-gray-300 flex items-center">
-              <img src = {file.imagepath || "/images/placeholder.png"} className="p-3 bg-white rounded-md ml-2 mr-2 my-1 h-4 w-4"></img>
-                {removeFileExtension(file.fileName)}
+              <td className="p-3 dark:text-gray-300">
+                <div className="flex flex-row items-center">
+                  {file.mime_type === "inode/directory" ? (
+                    <Folder className="h-6 w-5 mr-2 fill-current dark:text-darkIconPrimary" />
+                  ) : (
+                    <File className="h-5 w-5 mr-2 fill-current dark:text-darkIconPrimary" />
+                  )}
+                  {removeFileExtension(file.fileName)}
+                </div>
               </td>
               <td className="p-3 dark:text-gray-300">
                 {formatDate(file.modified)}

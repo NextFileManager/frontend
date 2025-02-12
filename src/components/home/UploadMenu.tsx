@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { FileUp, FolderUp, FolderPlus } from "lucide-react";
 import useClickOutside from "../common/hooks/useClickOutside";
+import axios from "axios";
 
 interface UploadMenuProps {
   isOpen: boolean;
@@ -17,16 +18,32 @@ const UploadMenu: React.FC<UploadMenuProps> = ({ isOpen, toggleMenu }) => {
     console.log("New Folder option selected");
   };
 
-  const handleFileUpload = () => {
+  const handleFileUpload = async () => {
     const input = document.createElement("input");
     input.type = "file";
     input.multiple = true; // Allow multiple file selection
-    input.onchange = (event) => {
+
+    input.onchange = async (event) => {
       const files = (event.target as HTMLInputElement).files;
-      if (files) {
-        console.log("Files selected:", files);
+      if (!files || files.length === 0) return;
+
+      const formData = new FormData();
+
+      for (const file of files) {
+        formData.append("file", file);
+      }
+
+      try {
+        const response = await axios.post("/api/upload", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+
+        console.log("Upload successful:", response.data);
+      } catch (error: any) {
+        console.error("Upload failed:", error.response?.data || error.message);
       }
     };
+
     input.click();
   };
 

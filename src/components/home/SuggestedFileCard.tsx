@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ContextMenu from "./ContextMenu";
-import { faRefresh } from "@fortawesome/free-solid-svg-icons";
+import { File, Folder } from "lucide-react";
 
 interface SuggestedFileCardProps {
   file: {
@@ -14,7 +14,10 @@ interface SuggestedFileCardProps {
   refreshData: () => void;
 }
 
-const SuggestedFileCard: React.FC<SuggestedFileCardProps> = ({ file, refreshData }) => {
+const SuggestedFileCard: React.FC<SuggestedFileCardProps> = ({
+  file,
+  refreshData,
+}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const formatDate = (epoch: string) => {
@@ -26,9 +29,12 @@ const SuggestedFileCard: React.FC<SuggestedFileCardProps> = ({ file, refreshData
     });
   };
 
-  const removeFileExtension = (fileName: string) => {
+  const formatName = (fileName: string) => {
     if (!fileName) return "Unnamed File";
-    return fileName.replace(/\.[^/.]+$/, "");
+    const formattedName = fileName.replace(/\.[^/.]+$/, "");
+    return formattedName.length > 20
+      ? formattedName.slice(0, 20) + "..."
+      : formattedName;
   };
 
   const toggleMenu = () => {
@@ -37,20 +43,18 @@ const SuggestedFileCard: React.FC<SuggestedFileCardProps> = ({ file, refreshData
 
   return (
     <div className="relative bg-white rounded-lg shadow-md p-4 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition duration-200">
-      <Link
-        to="/"
-        className="flex items-center space-x-4"
-      >
-        <img
-          src={file.imagepath || "/images/placeholder.png"}
-          className="w-12 h-12 sm:w-10 sm:h-10 bg-gray-200 dark:bg-gray-600 object-cover rounded-lg flex-shrink-0"
-        />
+      <Link to="/" className="flex items-center space-x-4">
+        {file.mime_type === "inode/directory" ? (
+          <Folder className="h-8 w-8 fill-current dark:text-darkIconPrimary" />
+        ) : (
+          <File className="h-8 w-8 fill-current dark:text-darkIconPrimary" />
+        )}
         <div className="flex-1 min-w-0">
           <h3
             className="font-semibold text-sm sm:text-sm md:text-md dark:text-white truncate"
             title={file.fileName}
           >
-            {removeFileExtension(file.fileName)}
+            {formatName(file.fileName)}
           </h3>
           <p className="text-xs sm:text-xxs dark:text-gray-400 mt-1">
             {formatDate(file.modified)}

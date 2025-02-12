@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import LoadingIndicator from "../LoadingIndicator";
 import ErrorDisplay from "../ErrorDisplay";
 import SuggestedFilesGrid from "../SuggestedFilesGrid";
@@ -16,11 +16,7 @@ interface File {
   size: number;
 }
 
-interface APIResponse {
-  files: File[];
-}
-
-const Home: FC = () => {
+const Home: React.FC = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -46,7 +42,7 @@ const Home: FC = () => {
         }
         setLoading(false);
       })
-      .catch((err) => {
+      .catch(() => {
         setError("Failed to fetch directory data.");
         setLoading(false);
       });
@@ -72,7 +68,7 @@ const Home: FC = () => {
     <div>
       <section className="px-6">
         <h2 className="text-xl font-bold mt-1 mb-4 dark:text-white">For you</h2>
-        <SuggestedFilesGrid files={files} refreshData={fetchData} />
+        <SuggestedFilesGrid files={files.slice(0, 5)} refreshData={fetchData} />
       </section>
       <section className="px-6">
         <div className="mb-4 flex justify-between items-center">
